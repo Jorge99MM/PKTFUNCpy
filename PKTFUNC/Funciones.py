@@ -1,15 +1,21 @@
+from pkg_resources import resource_filename
 import pandas as pd
 import numpy as np
 
-ruta = "C:/Users/jmm02/Forvis Mazars Spain Dropbox/Jorge Mallo/Implemenación R/Funciones R/PKTFUNC python/PKTFUNC/Datos/TABLAS.xlsx"
+def cargar_tablas():
+    ruta = resource_filename('PKTFUNC', 'Datos/TABLAS.xlsx')
+    tablas = {
+        'PERM2020_2OIND': pd.read_excel(ruta, sheet_name="PERM2020_2OIND"),
+        'PERM2020_1OIND': pd.read_excel(ruta, sheet_name="PERM2020_1OIND"),
+        'PERM2020_1OCOL': pd.read_excel(ruta, sheet_name="PERM2020_1OCOL"),
+        'PERM2020_2OCOL': pd.read_excel(ruta, sheet_name="PERM2020_2OCOL"),
+        'PERM2000_CART': pd.read_excel(ruta, sheet_name="PERM2000_CART"),
+        'PERM2000_NEWCONTR': pd.read_excel(ruta, sheet_name="PERM2000_NEWCONTR")
+    }
+    return tablas
 
-PERM2020_2OIND = pd.read_excel(ruta, sheet_name="PERM2020_2OIND")
-PERM2020_1OIND = pd.read_excel(ruta, sheet_name="PERM2020_1OIND")
-PERM2020_1OCOL = pd.read_excel(ruta, sheet_name="PERM2020_1OCOL")
-PERM2020_2OCOL = pd.read_excel(ruta, sheet_name="PERM2020_2OCOL")
-PERM2000_CART = pd.read_excel(ruta, sheet_name="PERM2000_CART")
-PERM2000_NEWCONTR = pd.read_excel(ruta, sheet_name="PERM2000_NEWCONTR")
-print(PERM2020_2OIND)
+# Cargar todas las tablas
+tablas = cargar_tablas()
 
 
 
@@ -25,18 +31,9 @@ def tabla_gen_anual(generacion, tabla_nombre, año_base=2012, genero="hombre"):
     :param genero: "hombre" o "mujer" (por defecto "hombre")
     :return: DataFrame con las columnas X, qx, y Lx
     """
-    # Diccionario de tablas disponibles
-    tablas = {
-        'PERM2020_2OIND': PERM2020_2OIND,
-        'PERM2020_1OIND': PERM2020_1OIND,
-        'PERM2020_1OCOL': PERM2020_1OCOL,
-        'PERM2020_2OCOL': PERM2020_2OCOL,
-        'PERM2000_CART': PERM2000_CART,
-        'PERM2000_NEWCONTR': PERM2000_NEWCONTR
-    }
-    
-    # Seleccionar la tabla correcta
     tabla = tablas[tabla_nombre]
+    
+
     
     # Seleccionar columnas basadas en el género
     if genero.lower() == "hombre":
